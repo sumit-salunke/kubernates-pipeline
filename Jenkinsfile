@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Unit Testing') {
             agent {
-                label javaUnitTest
+                label 'javaUnitTest'
             }
             steps {
                 sh 'ant -f test.xml -v'
@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             agent {
-                label masternode
+                label 'masternode'
             }
             steps {
                 sh 'ant -f Build.xml -v'
@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Deploy') {
             agent {
-                label masternode
+                label 'masternode'
             }
             steps {
                sh "mkdir -p /var/www/html/rectangles/all/${env.BRANCH_NAME}"
@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Running on Docker Slave') {
             agent {
-                label jdkdocker
+                label 'jdkdocker'
             }
             steps {
                 sh "wget http://sumitsalunke1.mylabserver.com/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJOR_RELEASE}.${env.BUILD_NUMBER}.jar"
